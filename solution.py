@@ -1,12 +1,17 @@
 def solve(N, A):
-    from collections import defaultdict
-    
-    load = defaultdict(int)
+    events = []
     
     for arrival, departure, dishes in A:
-        for _ in range(dishes):
-            min_load = min(load[t] for t in range(arrival, departure + 1))
-            best_time = next(t for t in range(arrival, departure + 1) if load[t] == min_load)
-            load[best_time] += 1
+        events.append((arrival, dishes))
+        events.append((departure + 1, -dishes))
     
-    return max(load.values()) if load else 0
+    events.sort()
+    
+    max_chefs = 0
+    current_load = 0
+    
+    for time, change in events:
+        current_load += change
+        max_chefs = max(max_chefs, current_load)
+    
+    return max_chefs
