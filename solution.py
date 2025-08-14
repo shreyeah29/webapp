@@ -8,9 +8,4 @@ def maximizeScore(arr):
                 t.append(v)
             else:
                 t[j] = v
-    
-    result = len(t)
-    if t and t[0] > 1 and result > 2:
-        result -= 1
-    
-    return result
+    return len(t) if t and t[0] == 1 else max(0, len(t) - 1)
